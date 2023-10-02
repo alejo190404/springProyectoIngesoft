@@ -1,11 +1,29 @@
 package com.ingesoft.bikemap.api;
 
-import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.ingesoft.bikemap.dominio.Usuario;
+import com.ingesoft.bikemap.logic.ServicioUsuario;
 
-@RepositoryRestResource(collectionResourceRel="usuarios", path="usuarios")
-public interface ApiUsuario extends PagingAndSortingRepository<Usuario, Long>{
+@RestController
+public class ApiUsuario {
     
+    @Autowired
+    private ServicioUsuario servicioUsuario;
+
+    @PostMapping("/api/usuarios")
+    public void crearUsuario(
+        String nombreCompleto,
+        String nombreUsuario,
+        String contraseña,
+        String confirmacionContraseña,
+        String correoRecuperacion,
+        String confirmacionCorreoRecuperacion ){
+
+
+        servicioUsuario.CrearUsuario(nombreCompleto, nombreUsuario, contraseña, confirmacionContraseña, correoRecuperacion, confirmacionCorreoRecuperacion);
+
+    }
+
 }
