@@ -22,7 +22,7 @@ public class ApiUsuario {
         String confirmacionCorreoRecuperacion ){
 
 
-        servicioUsuario.CrearUsuario(nombreCompleto, nombreUsuario, contraseña, confirmacionContraseña, correoRecuperacion, confirmacionCorreoRecuperacion);
+        servicioUsuario.RegistrarUsuario(nombreCompleto, nombreUsuario, contraseña, confirmacionContraseña, correoRecuperacion, confirmacionCorreoRecuperacion);
 
     }
 

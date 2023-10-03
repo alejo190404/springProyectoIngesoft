@@ -1,6 +1,7 @@
 package com.ingesoft.bikemap.logic;
 
 import java.util.Optional;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.ingesoft.bikemap.dataAccess.RepositorioUsuario;
 import com.ingesoft.bikemap.dominio.Usuario;
 
-import ch.qos.logback.core.boolex.Matcher;
+
 
 @Service
 public class ServicioUsuario {
@@ -18,7 +19,7 @@ public class ServicioUsuario {
     @Autowired
     private RepositorioUsuario repositorioUsuario;
 
-    public void CrearUsuario(
+    public void RegistrarUsuario(
         String nombreCompleto, //1
         String nombreUsuario, //2
         String contrasenia, //4
@@ -29,6 +30,8 @@ public class ServicioUsuario {
         Usuario u = new Usuario();
 
         //3. Validar que no existe nombre de usuario
+
+        u.setLogin(nombreUsuario);
 
         Optional<Usuario> usuario = repositorioUsuario.findOne(u);
 
@@ -55,16 +58,27 @@ public class ServicioUsuario {
         Pattern pattern = Pattern.compile(regexCorreos);
 
         Matcher matcher = pattern.matcher(correoRecuperacion);
-        System.out.println(email +" : "+ matcher.matches());
+        
+        if(!matcher.matches()){
+            throw new Exception("Este no es un email válido. Prueba con otro diferente.");
+        }
         
 
         //10. Validar que no existe correo de recuperacion
 
+        u.setLogin(nombreUsuario);
 
+        usuario = repositorioUsuario.findOne(u);
+
+        if (usuario.isEmpty()){
+            throw new Exception("Este  correo ya existe en el sistema. Verifica si ya tienes una cuenta o prueba con uno diferente.");
+        }
 
         //12. Validar que correos coincidan
 
-
+        if(!confirmacionCorreoRecuperacion.equals(correoRecuperacion)){
+            throw new Exception ("Los correos no coinciden.");
+        }
 
         //Despues de todas las validaciones, añadir nuevo Usuario a la BD
 
