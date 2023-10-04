@@ -19,7 +19,7 @@ public class ApiUsuario {
         String contraseña,
         String confirmacionContraseña,
         String correoRecuperacion,
-        String confirmacionCorreoRecuperacion ){
+        String confirmacionCorreoRecuperacion ) throws Exception{
 
 
         servicioUsuario.RegistrarUsuario(nombreCompleto, nombreUsuario, contraseña, confirmacionContraseña, correoRecuperacion, confirmacionCorreoRecuperacion);

@@ -7,5 +7,6 @@ import com.ingesoft.bikemap.dominio.Usuario;
 
 @Repository
 public interface RepositorioUsuario extends JpaRepository<Usuario, Long>{
-    
+    Usuario findByLogin(String login);
+    Usuario findByCorreoRecuperacion(String correoRecuperacion);
 }

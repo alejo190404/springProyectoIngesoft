@@ -1,11 +1,9 @@
 package com.ingesoft.bikemap.logic;
 
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.ingesoft.bikemap.dataAccess.RepositorioUsuario;
@@ -25,17 +23,16 @@ public class ServicioUsuario {
         String contrasenia, //4
         String confirmacionContrasenia, //6
         String correoRecuperacion, //8
-        String confirmacionCorreoRecuperacion /*11*/ ){
+        String confirmacionCorreoRecuperacion /*11*/ ) throws Exception{
             
         Usuario u = new Usuario();
 
+
         //3. Validar que no existe nombre de usuario
 
-        u.setLogin(nombreUsuario);
-
-        Optional<Usuario> usuario = repositorioUsuario.findOne(u);
-
-        if (usuario.isEmpty()){
+        u = repositorioUsuario.findByLogin(nombreUsuario);
+        
+        if (u == null){
             throw new Exception("Este nombre de usuario ya existe. Prueba con otro diferente");
         }
         
@@ -66,12 +63,10 @@ public class ServicioUsuario {
 
         //10. Validar que no existe correo de recuperacion
 
-        u.setLogin(nombreUsuario);
+        u = repositorioUsuario.findByCorreoRecuperacion(correoRecuperacion);
 
-        usuario = repositorioUsuario.findOne(u);
-
-        if (usuario.isEmpty()){
-            throw new Exception("Este  correo ya existe en el sistema. Verifica si ya tienes una cuenta o prueba con uno diferente.");
+        if (u == null){
+            throw new Exception("Este correo ya existe en el sistema. Verifica si ya tienes una cuenta o prueba con uno diferente");
         }
 
         //12. Validar que correos coincidan
