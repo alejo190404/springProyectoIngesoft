@@ -25,14 +25,14 @@ public class ServicioUsuario {
         String correoRecuperacion, //8
         String confirmacionCorreoRecuperacion /*11*/ ) throws Exception{
             
-        Usuario u = new Usuario();
+        Usuario uPrueba = new Usuario();
 
 
         //3. Validar que no existe nombre de usuario
 
-        u = repositorioUsuario.findByLogin(nombreUsuario);
+        uPrueba = repositorioUsuario.findByLogin(nombreUsuario);
         
-        if (u != null){
+        if (uPrueba != null){
             throw new Exception("Este nombre de usuario ya existe. Prueba con otro diferente");
         }
         
@@ -63,9 +63,9 @@ public class ServicioUsuario {
 
         //10. Validar que no existe correo de recuperacion
 
-        u = repositorioUsuario.findByCorreoRecuperacion(correoRecuperacion);
+        uPrueba = repositorioUsuario.findByCorreoRecuperacion(correoRecuperacion);
 
-        if (u != null){
+        if (uPrueba != null){
             throw new Exception("Este correo ya existe en el sistema. Verifica si ya tienes una cuenta o prueba con uno diferente");
         }
 
@@ -77,6 +77,7 @@ public class ServicioUsuario {
 
         //Despues de todas las validaciones, añadir nuevo Usuario a la BD
 
+        Usuario u = new Usuario();
         u.setNombreCompleto(nombreCompleto);
         u.setLogin(nombreUsuario);
         u.setContraseña(contrasenia);
