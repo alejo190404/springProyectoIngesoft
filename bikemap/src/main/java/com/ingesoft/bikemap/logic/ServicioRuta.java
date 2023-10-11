@@ -10,4 +10,12 @@ public class ServicioRuta {
     
     @Autowired
     private RepositorioRuta repositorioRuta;
+
+    public void CalificarRuta(String nombreRuta, short calificacion){
+
+    }
+
+    public void CrearRuta(){
+        
+    }
 }
