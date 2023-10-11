@@ -32,7 +32,7 @@ public class ServicioUsuario {
 
         u = repositorioUsuario.findByLogin(nombreUsuario);
         
-        if (u == null){
+        if (u != null){
             throw new Exception("Este nombre de usuario ya existe. Prueba con otro diferente");
         }
         
@@ -65,7 +65,7 @@ public class ServicioUsuario {
 
         u = repositorioUsuario.findByCorreoRecuperacion(correoRecuperacion);
 
-        if (u == null){
+        if (u != null){
             throw new Exception("Este correo ya existe en el sistema. Verifica si ya tienes una cuenta o prueba con uno diferente");
         }
 
@@ -77,7 +77,12 @@ public class ServicioUsuario {
 
         //Despues de todas las validaciones, añadir nuevo Usuario a la BD
 
-
+        u.setNombreCompleto(nombreCompleto);
+        u.setLogin(nombreUsuario);
+        u.setContraseña(contrasenia);
+        u.setCorreoRecuperacion(correoRecuperacion);
+        
+        repositorioUsuario.save(u);
     }
 
 }
