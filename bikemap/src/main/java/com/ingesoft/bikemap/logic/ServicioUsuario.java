@@ -85,4 +85,29 @@ public class ServicioUsuario {
         repositorioUsuario.save(u);
     }
 
+    public void IniciarSesion(
+        String login, //1
+        String contrasenia /*4*/) throws Exception{
+
+        Usuario u = new Usuario();
+
+        //2. Validar que usuario exista
+
+        u = repositorioUsuario.findByLogin(login);
+
+        if (u == null){
+            throw new Exception("El usuario con login (" + login + ") no existe. Registralo.");
+        }
+
+        //4. Validar contraseña
+
+        if (!contrasenia.equals(u.getContraseña())){
+            throw new Exception("La contraseña ingresada no coincide.");
+        }
+
+        //5. Ingresar al sistema
+        //¿Cómo ingresar al sistema?
+
+    }
+
 }
