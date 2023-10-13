@@ -2,6 +2,7 @@ package com.ingesoft.bikemap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,15 +12,92 @@ import com.ingesoft.bikemap.dominio.Usuario;
 import com.ingesoft.bikemap.logic.ServicioUsuario;
 
 @SpringBootTest
-public class CURegistrarUsuarioTest {
-    
+public class CUUsuarioTest {
     @Autowired
     ServicioUsuario servicio;
-    
+
     @Autowired
     RepositorioUsuario repoUsuario;
 
-    @Test //Probar registro sencillo
+    @BeforeEach
+    void resetear(){
+        repoUsuario.deleteAll();
+    }
+
+    //CU Iniciar Sesión
+
+    @Test
+    void probarIniciarSesionExitoso() throws Exception{
+        try {
+            //Arrange
+
+            Usuario u = new Usuario();
+            u.setNombreCompleto("prueba");
+            u.setLogin("prueba");
+            u.setContraseña("secret");
+            u.setCorreoRecuperacion("prueba@gmail.com");
+            repoUsuario.save(u);
+
+            //Act
+
+            servicio.IniciarSesion("prueba", "secret");
+
+            //Assert
+            
+        } catch (Exception e) {
+            //Assert
+            fail();
+        }
+    }
+
+    @Test
+    void probarIniciarSesionUsuarioNoExiste() throws Exception{
+        try {
+            //Arrange
+
+            //Act
+
+            servicio.IniciarSesion("prueba", "prueba");
+
+            //Assert
+
+            fail();
+        } catch (Exception e) {
+            //Assert
+            
+            
+        }
+    }
+
+    @Test
+    void probarIniciarSesionContraseñaIncorrecta() throws Exception{
+        try {
+            //Arrange
+
+            Usuario u = new Usuario();
+            u.setNombreCompleto("prueba");
+            u.setLogin("prueba");
+            u.setContraseña("secret");
+            u.setCorreoRecuperacion("prueba@gmail.com");
+            repoUsuario.save(u);
+
+            //Act
+
+            servicio.IniciarSesion("prueba", "secretito");
+
+            //Assert
+
+            fail();
+        } catch (Exception e) {
+            //Assert
+
+            
+        }
+    }
+
+    //CU Registrar Usuario
+
+    @Test
     void probarRegistro() throws Exception{
         
         try {
@@ -36,8 +114,7 @@ public class CURegistrarUsuarioTest {
 
     }
 
-    //Preguntar
-    @Test //Probar registro con nomrbe de usuario existente, creado en prueba anterior
+    @Test
     void probarRegistroNombreExistente() throws Exception {
         try {
             servicio.RegistrarUsuario("prueba",
@@ -162,5 +239,4 @@ public class CURegistrarUsuarioTest {
             fail();
         }
     }
-
 }
