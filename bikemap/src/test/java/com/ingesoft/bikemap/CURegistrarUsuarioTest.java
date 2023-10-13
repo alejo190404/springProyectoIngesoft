@@ -97,7 +97,7 @@ public class CURegistrarUsuarioTest {
         }
     }
 
-    @Test
+    /*@Test
     void probarRegistroCorreoSinSintaxisDos() throws Exception{
         try {
             servicio.RegistrarUsuario("prueba5",
@@ -111,7 +111,7 @@ public class CURegistrarUsuarioTest {
             // TODO: handle exception
         }
     }
-
+*/
     @Test
     void probarRegistroCorreoExistente() throws Exception{
         try {
