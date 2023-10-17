@@ -170,7 +170,7 @@ public class ServicioRuta {
         nueva.setCalificacion(Short.parseShort(calificacion));
         
         if (reseñaVacia){
-            nueva.setReseña("Sin reseña");    
+            nueva.setReseña("Sin reseña");
         }
         else {
             nueva.setReseña(reseña);

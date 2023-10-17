@@ -26,6 +26,7 @@ public class Punto_Interes {
     private String descripcion;
     private String latitud;
     private String longitud;
+    private float calificacionPromedio;
     @Temporal(TemporalType.DATE)
     private Date fechaCreacion;
 
