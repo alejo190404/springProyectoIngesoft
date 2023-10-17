@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.ingesoft.bikemap.dataAccess.RepositorioCalificacion_Ruta;
 import com.ingesoft.bikemap.dataAccess.RepositorioRuta;
 import com.ingesoft.bikemap.dataAccess.RepositorioUsuario;
+import com.ingesoft.bikemap.dominio.Calificacion_Ruta;
 import com.ingesoft.bikemap.dominio.Ruta;
 import com.ingesoft.bikemap.dominio.Usuario;
 import com.ingesoft.bikemap.logic.ServicioRuta;
@@ -481,40 +482,59 @@ public class CURutaTest {
         try {
             // Arrange
 
+            Usuario u = new Usuario();
+
+            u.setNombreCompleto("Alvaro Leyva");
+            u.setLogin("Prueba");
+            u.setContraseña("secret");
+            u.setCorreoRecuperacion("alvaro@gmail.com");
+
+            repositorioUsuario.save(u);
+
+            Usuario uOtro = new Usuario();
+
+            uOtro.setNombreCompleto("Karim Benzema");
+            uOtro.setLogin("parcero");
+            uOtro.setContraseña("secret");
+            uOtro.setCorreoRecuperacion("parcerooos@gmail.com");
+
+            repositorioUsuario.save(uOtro);
+
+            Ruta r = new Ruta();
+
+            r.setNombre("Universidades");
+            r.setDescripcion("Ruta por las principales universidades");
+            r.setCalificacionPromedio(Float.parseFloat("4.3"));
+
+            Date fecha = Date.valueOf("2023-10-17");
+            Pair<String, String> p1 = new Pair<String, String>("4", "6");
+            Pair<String, String> p2 = new Pair<String, String>("5", "7");
+            Pair<String, String> p3 = new Pair<String, String>("6", "8");
+            List<Pair<String, String>> puntos = new ArrayList<>();
+            puntos.add(0, p1);
+            puntos.add(1, p2);
+            puntos.add(2, p3);
+
+            r.setPuntos(puntos);
+            r.setFechaCreacion(fecha);
+            r.setCreador(u);
+
+            repositorioRuta.save(r);
+
             // Act
+
+            servicio.CalificarRuta(
+                "Universidades",
+                "3",
+                "Buenas ubicaciones, sin embargo, el orden no ayuda a navegarla bien",
+                "parcero"
+            );
 
             // Assert
 
         } catch (Exception e) {
             // Assert
-        }
-    }
-
-    @Test
-    void CalificarRutaCoordenadaLatitudIncorrecta() throws Exception {
-        try {
-            // Arrange
-
-            // Act
-
-            // Assert
-
-        } catch (Exception e) {
-            // Assert
-        }
-    }
-
-    @Test
-    void CalificarRutaCoordenadaLongitudIncorrecta() throws Exception {
-        try {
-            // Arrange
-
-            // Act
-
-            // Assert
-
-        } catch (Exception e) {
-            // Assert
+            fail("El sistema no calificó apropiadamente la ruta");
         }
     }
 
@@ -523,9 +543,64 @@ public class CURutaTest {
         try {
             // Arrange
 
+            Usuario u = new Usuario();
+
+            u.setNombreCompleto("Alvaro Leyva");
+            u.setLogin("Prueba");
+            u.setContraseña("secret");
+            u.setCorreoRecuperacion("alvaro@gmail.com");
+
+            repositorioUsuario.save(u);
+
+            Usuario uOtro = new Usuario();
+
+            uOtro.setNombreCompleto("Karim Benzema");
+            uOtro.setLogin("parcero");
+            uOtro.setContraseña("secret");
+            uOtro.setCorreoRecuperacion("parcerooos@gmail.com");
+
+            repositorioUsuario.save(uOtro);
+
+            Ruta r = new Ruta();
+
+            r.setNombre("Universidades");
+            r.setDescripcion("Ruta por las principales universidades");
+            r.setCalificacionPromedio(Float.parseFloat("4.3"));
+
+            Date fecha = Date.valueOf("2023-10-17");
+            Pair<String, String> p1 = new Pair<String, String>("4", "6");
+            Pair<String, String> p2 = new Pair<String, String>("5", "7");
+            Pair<String, String> p3 = new Pair<String, String>("6", "8");
+            List<Pair<String, String>> puntos = new ArrayList<>();
+            puntos.add(0, p1);
+            puntos.add(1, p2);
+            puntos.add(2, p3);
+
+            r.setPuntos(puntos);
+            r.setFechaCreacion(fecha);
+            r.setCreador(u);
+
+            repositorioRuta.save(r);
+
             // Act
 
+            servicio.CalificarRuta(
+                "Universidades",
+                "3",
+                "",
+                "parcero"
+            );
+
             // Assert
+
+            List<Calificacion_Ruta> crs = repositorioCalificacion_Ruta.findByCreador_Login("parcero");
+            for (Calificacion_Ruta cali: crs){
+                if (cali.getRutaCalificada().getNombre() == "Universidades"){
+                    if (cali.getRutaCalificada().getDescripcion() != "Sin reseña"){
+                        fail("El sistema registró erróneamente la reseña de una calificación");
+                    }
+                }
+            }
 
         } catch (Exception e) {
             // Assert
