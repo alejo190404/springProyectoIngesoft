@@ -612,9 +612,59 @@ public class CURutaTest {
         try {
             // Arrange
 
+            Usuario u = new Usuario();
+
+            u.setNombreCompleto("Alvaro Leyva");
+            u.setLogin("Prueba");
+            u.setContraseña("secret");
+            u.setCorreoRecuperacion("alvaro@gmail.com");
+
+            repositorioUsuario.save(u);
+
+            Usuario uOtro = new Usuario();
+
+            uOtro.setNombreCompleto("Karim Benzema");
+            uOtro.setLogin("parcero");
+            uOtro.setContraseña("secret");
+            uOtro.setCorreoRecuperacion("parcerooos@gmail.com");
+
+            repositorioUsuario.save(uOtro);
+
+            Ruta r = new Ruta();
+
+            r.setNombre("Universidades");
+            r.setDescripcion("Ruta por las principales universidades");
+            r.setCalificacionPromedio(Float.parseFloat("4.3"));
+
+            Date fecha = Date.valueOf("2023-10-17");
+            Pair<String, String> p1 = new Pair<String, String>("4", "6");
+            Pair<String, String> p2 = new Pair<String, String>("5", "7");
+            Pair<String, String> p3 = new Pair<String, String>("6", "8");
+            List<Pair<String, String>> puntos = new ArrayList<>();
+            puntos.add(0, p1);
+            puntos.add(1, p2);
+            puntos.add(2, p3);
+
+            r.setPuntos(puntos);
+            r.setFechaCreacion(fecha);
+            r.setCreador(u);
+
+            repositorioRuta.save(r);
+
+            String texto1000caracteres = "Este es un cuento de más de 1000 caracteres. Ernesto Gurrián se escondió tras el coche. Joaquín a su lado empuñó el arma reglamentaria. Desde allí podían ver la puerta abierta por donde saldrían. Los de dentro se habían cargado, hace tres días a Tomás Ojibe un compañero encantador con una hija de meses, tanto Joaquín como Ernesto habían estado en el bautizo. El coordinador de la operación lo dijo claramente en la reunión previa: “en caso de duda disparen, estos hijos de puta no se nos pueden escapar”. Joaquín oía su propio sobrealiento, sentía la boca seca, tenía ganas de ver la cara de mierda de aquellos tipejos a los que no conocía ni en fotos. Se fue abriendo la puerta. Ernesto tenía mejor ángulo y desde allí, fue el primero en ver y reconocer los zapatos de la chica. Joaquín le miró de reojo. Vio como de repente le empezó a temblar la mano aferrada a la pistola. Pasaron tres segundos. Vio sus ojos encharcados con una pena de padre pero una angustia de ira. Vio a Ojibe con su hija en brazos junto al baptisterio. Vio a su hija, a la suya en la calle. Joaquín grito “!Alto policía tirad las armas!” luego tres disparos. “¿Qué haces Ernesto?” le gritó. Solo murió la chica y Ernesto vivió muerto para siempre.";
+
             // Act
 
+            servicio.CalificarRuta(
+                "Universidades",
+                "3",
+                texto1000caracteres,
+                "parcero"
+            );
+
             // Assert
+
+            fail("El sistema registró una calificación con reseña de más de 1000 caracteres");
 
         } catch (Exception e) {
             // Assert
@@ -626,12 +676,77 @@ public class CURutaTest {
         try {
             // Arrange
 
+            Usuario u = new Usuario();
+
+            u.setNombreCompleto("Alvaro Leyva");
+            u.setLogin("Prueba");
+            u.setContraseña("secret");
+            u.setCorreoRecuperacion("alvaro@gmail.com");
+
+            repositorioUsuario.save(u);
+
+            Usuario uOtro = new Usuario();
+
+            uOtro.setNombreCompleto("Karim Benzema");
+            uOtro.setLogin("parcero");
+            uOtro.setContraseña("secret");
+            uOtro.setCorreoRecuperacion("parcerooos@gmail.com");
+
+            repositorioUsuario.save(uOtro);
+
+            Ruta r = new Ruta();
+
+            r.setNombre("Universidades");
+            r.setDescripcion("Ruta por las principales universidades");
+            r.setCalificacionPromedio(Float.parseFloat("4.3"));
+
+            Date fecha = Date.valueOf("2023-10-17");
+            Pair<String, String> p1 = new Pair<String, String>("4", "6");
+            Pair<String, String> p2 = new Pair<String, String>("5", "7");
+            Pair<String, String> p3 = new Pair<String, String>("6", "8");
+            List<Pair<String, String>> puntos = new ArrayList<>();
+            puntos.add(0, p1);
+            puntos.add(1, p2);
+            puntos.add(2, p3);
+
+            r.setPuntos(puntos);
+            r.setFechaCreacion(fecha);
+            r.setCreador(u);
+
+            repositorioRuta.save(r);
+
+            Calificacion_Ruta cr = new Calificacion_Ruta();
+
+            cr.setReseña("Buena ruta crack");
+            cr.setCalificacion(Short.parseShort("4"));
+            cr.setCreador(uOtro);
+            cr.setRutaCalificada(r);
+
             // Act
 
+            String reseña = "No me gusta tanto la ruta";
+
+            servicio.CalificarRuta(
+                "Universidades",
+                "3",
+                reseña,
+                "parcero"
+            );
+
             // Assert
+
+            List<Calificacion_Ruta> crs = repositorioCalificacion_Ruta.findByCreador_Login("parcero");
+            for (Calificacion_Ruta cali: crs){
+                if (cali.getRutaCalificada().getNombre() == "Universidades"){
+                    if (cali.getRutaCalificada().getDescripcion() != reseña){
+                        fail("El sistema registró erróneamente la nueva reseña de un usuario");
+                    }
+                }
+            }
 
         } catch (Exception e) {
             // Assert
+            fail("El sistema arrojó una excepción cuando no debia");
         }
     }
 
