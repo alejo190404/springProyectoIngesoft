@@ -40,7 +40,7 @@ public class ServicioPuntoDeInteres {
             throw new Exception("La calificación no puede ser deciman. Ingrese un número entero");
         }
 
-        if (Integer.parseInt(calificacion) < 0 && Integer.parseInt(calificacion) > 5){
+        if (Integer.parseInt(calificacion) < 0 || Integer.parseInt(calificacion) > 5){
             throw new Exception("La calificación debe estar entre 0 y 5");
         }
 

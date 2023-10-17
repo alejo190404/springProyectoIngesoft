@@ -37,11 +37,11 @@ public class ServicioRuta {
         // 1. Validar coordenadas
 
         for (Pair<String, String> pair : puntosRecorridos) {
-            if (Float.parseFloat(pair.getKey()) > (90) && Float.parseFloat(pair.getKey()) < (-90)) {
+            if (Float.parseFloat(pair.getKey()) > (90) || Float.parseFloat(pair.getKey()) < (-90)) { //Latitud
                 throw new Exception("Error al recibir alguno de los puntos. Sus coordenadas no cumplen los requisitos");
             }
 
-            if (Float.parseFloat(pair.getValue()) > (180) && Float.parseFloat(pair.getKey()) < (-180)) {
+            if (Float.parseFloat(pair.getValue()) > (180) || Float.parseFloat(pair.getKey()) < (-180)) { //Longitud
                 throw new Exception("Error al recibir alguno de los puntos. Sus coordenadas no cumplen los requisitos");
             }
         }
