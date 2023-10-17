@@ -143,6 +143,8 @@ public class CUUsuarioTest {
             u.setContraseña("secret");
             u.setCorreoRecuperacion("info@paisasclub.co");
 
+            repoUsuario.save(u);
+
             // Act
 
             servicio.RegistrarUsuario(
