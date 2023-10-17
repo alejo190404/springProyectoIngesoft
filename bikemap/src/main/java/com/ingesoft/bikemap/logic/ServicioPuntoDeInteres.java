@@ -130,6 +130,16 @@ public class ServicioPuntoDeInteres {
             throw new Exception("Error en los valores. Debe escribir: (latitud, longitud), latitud entre -90 a 90, longitud de -180 a 180");
         }
 
+        //5. Validar que no existe otro punto con las mismas coordenadas
+
+        List<Punto_Interes> puntosEnLatitud = repositorioPunto_Interes.findByLatitud(latitud);
+        
+        for(Punto_Interes punto: puntosEnLatitud){
+            if (longitud.equals(punto.getLongitud())){
+                throw new Exception("¡Ya existe un punto en esta ubicación exacta!");
+            }
+        }
+
         //6. Categotria "Otro"
 
         boolean categoriaOtro = false;
@@ -177,17 +187,46 @@ public class ServicioPuntoDeInteres {
         
         //1. Validar que existe sitio en las coordenadas
 
+        List<Punto_Interes> puntosEnLatitud = repositorioPunto_Interes.findByLatitud(latitud);
+        Punto_Interes puntoAVisualizar = null;
         
+        for(Punto_Interes punto: puntosEnLatitud){
+            if (longitud.equals(punto.getLongitud())){
+                puntoAVisualizar = punto;
+            }
+        }
 
-        //2. Validar que usuario creador existe
+        if (puntoAVisualizar == null){
+            throw new Exception("Oops, aún no hay un punto de interés en esta ubicación");
+        }
 
+        //2. Validar que existen calificaciones
 
+        boolean existenCalificaciones = true;
 
-        //3. Validar que existen calificaciones
+        if (puntoAVisualizar.getCalificaciones() == null){
+            existenCalificaciones = false;
+        }
 
+        //3. Mostrar informacion del punto
 
-
-        //4. Mostrar informacion del punto
+        //Preguntar para mostrar mensajes de forma diferente
+        System.out.println("Nombre del punto: " + puntoAVisualizar.getNombre());
+        System.out.println("Descripción del punto: " + puntoAVisualizar.getDescripcion());
+        System.out.println("Creador del punto: " + puntoAVisualizar.getCreador().getLogin());
+        System.out.println("Calificacion promedio: " + puntoAVisualizar.getCalificacionPromedio());
+        if (existenCalificaciones == true){
+            for (Calificacion_Punto cali: puntoAVisualizar.getCalificaciones()){
+                System.out.println("Puntaje calificación: " + cali.getCalificacion());
+                System.out.println("Reseña calificación: " + cali.getReseña());
+            }
+        }
+        else {
+            System.out.println("Aún nadie ha calificado este punto. ¡Se la primera persona en hacerlo!"); 
+        }
+        System.out.println("Categoria: " + puntoAVisualizar.getCategoria().getNombre());
+        System.out.println("Fecha de creación: " + puntoAVisualizar.getFechaCreacion());
+        
 
     }
 
