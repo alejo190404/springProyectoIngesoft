@@ -1,5 +1,6 @@
 package com.ingesoft.bikemap.logic;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.ingesoft.bikemap.dataAccess.RepositorioCalificacion_Punto;
 import com.ingesoft.bikemap.dataAccess.RepositorioPunto_Interes;
+import com.ingesoft.bikemap.dataAccess.RepositorioTipo_Punto;
 import com.ingesoft.bikemap.dataAccess.RepositorioUsuario;
 import com.ingesoft.bikemap.dominio.Calificacion_Punto;
 import com.ingesoft.bikemap.dominio.Punto_Interes;
+import com.ingesoft.bikemap.dominio.Tipo_Punto;
 import com.ingesoft.bikemap.dominio.Usuario;
 
 @Service
@@ -21,6 +24,8 @@ public class ServicioPuntoDeInteres {
     private RepositorioUsuario repositorioUsuario;
     @Autowired
     private RepositorioCalificacion_Punto repositorioCalificacion_Punto;
+    @Autowired
+    private RepositorioTipo_Punto repositorioTipo_Punto;
 
     public void CalificarPuntoDeInteres (
         String nombrePunto,
@@ -105,11 +110,84 @@ public class ServicioPuntoDeInteres {
 
     }
 
-    public void CrearPuntoDeInteres(){
+    public void CrearPuntoDeInteres(
+        String nombre, //1
+        String descripcion, //2
+        String latitud, //3
+        String longitud, //3
+        String categoria, //5
+        Date fechaCreacion,
+        String loginCreador
+    ) throws Exception{
+
+        //4. Validar coordenadas
+
+        if (Float.parseFloat(latitud) < (-90) && Float.parseFloat(latitud) > 90){
+            throw new Exception("Error en los valores. Debe escribir: (latitud, longitud), latitud entre -90 a 90, longitud de -180 a 180");
+        }
+
+        if (Float.parseFloat(longitud) < (-180) && Float.parseFloat(longitud) > 180){
+            throw new Exception("Error en los valores. Debe escribir: (latitud, longitud), latitud entre -90 a 90, longitud de -180 a 180");
+        }
+
+        //6. Categotria "Otro"
+
+        boolean categoriaOtro = false;
+        Tipo_Punto nuevaCategoria = new Tipo_Punto();
+
+        if (categoria.equals("Otro")){
+            nuevaCategoria.setNombre(categoria);
+            nuevaCategoria.setPunto(null);
+        
+            repositorioTipo_Punto.save(nuevaCategoria);
+
+            categoriaOtro = true;
+        }
+
+        //7. Añadir a la BD
+
+        Punto_Interes p = new Punto_Interes();
+
+        p.setNombre(nombre);
+        p.setDescripcion(descripcion);
+        p.setLatitud(latitud);
+        p.setLongitud(longitud);
+        p.setCalificacionPromedio(0);
+        p.setFechaCreacion(fechaCreacion);
+        
+        if (categoriaOtro){
+            p.setCategoria(nuevaCategoria);
+        }
+        else {
+            Tipo_Punto cat = repositorioTipo_Punto.findByNombre(categoria);
+            p.setCategoria(cat);
+        }
+
+        Usuario u = repositorioUsuario.findByLogin(loginCreador);
+        p.setCreador(u);
+        
+        repositorioPunto_Interes.save(p);
 
     }
 
-    public void VisualizarPuntoDeInteres(){
+    public void VisualizarPuntoDeInteres(
+        String latitud,
+        String longitud
+    )throws Exception{
+        
+        //1. Validar que existe sitio en las coordenadas
+
+        
+
+        //2. Validar que usuario creador existe
+
+
+
+        //3. Validar que existen calificaciones
+
+
+
+        //4. Mostrar informacion del punto
 
     }
 
