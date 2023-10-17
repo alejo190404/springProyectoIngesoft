@@ -5,12 +5,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import javafx.util.Pair;
 
+import com.ingesoft.bikemap.dataAccess.RepositorioCalificacion_Ruta;
 import com.ingesoft.bikemap.dataAccess.RepositorioRuta;
 import com.ingesoft.bikemap.dataAccess.RepositorioUsuario;
+import com.ingesoft.bikemap.dominio.Calificacion_Ruta;
 import com.ingesoft.bikemap.dominio.Ruta;
 import com.ingesoft.bikemap.dominio.Usuario;
+
+import javafx.util.Pair;
 
 @Service
 public class ServicioRuta {
@@ -19,13 +22,15 @@ public class ServicioRuta {
     private RepositorioRuta repositorioRuta;
     @Autowired
     private RepositorioUsuario repositorioUsuario;
+    @Autowired
+    private RepositorioCalificacion_Ruta repositorioCalificacion_Ruta;
 
     public void CrearRuta(
             String nombre, // 2
             String descripcion, // 4
             List<Pair<String, String>> puntosRecorridos, // <Latitud, Longitud>
             Date fecha,
-            String nombreCreador) throws Exception {
+            String loginCreador) throws Exception {
 
         Ruta rPrueba = new Ruta();
 
@@ -73,7 +78,7 @@ public class ServicioRuta {
 
         Usuario u = new Usuario();
 
-        u = repositorioUsuario.findByLogin(nombreCreador);
+        u = repositorioUsuario.findByLogin(loginCreador);
 
         if (u != null) {
             throw new Exception("Este nombre de usuario ya existe. Prueba con otro diferente");
@@ -98,8 +103,80 @@ public class ServicioRuta {
         repositorioRuta.save(r);
     }
 
-    public void CalificarRuta(String nombreRuta, short calificacion) {
+    public void CalificarRuta(
+        String nombreRuta,
+        String calificacion, //1
+        String reseña,//3
+        String loginCreador
+        ) throws Exception {
+        
+        //2. Validar calificación
 
+        if ((Float.parseFloat(calificacion) % (Integer.parseInt(calificacion))) != 0){
+            throw new Exception("La calificación no puede ser decimal. Ingrese un número entero");
+        }
+
+        if (Integer.parseInt(calificacion) < 0 && Integer.parseInt(calificacion) > 5){
+            throw new Exception("La calificación debe estar entre 0 y 5");
+        }
+
+        //4. Validar reseña vacía
+
+        boolean reseñaVacia = false;
+        
+        if (reseña.length() != 0){
+            reseñaVacia = true;
+        }
+
+        //5. Validar tamaño de reseña
+
+        if (reseña.length() > 1000){
+            throw new Exception("La reseña no puede superar los 1000 caracteres");
+        }
+
+        //6. Validar existencia de calificacion del usuario
+
+        List<Calificacion_Ruta> calificacionesUsuario = repositorioCalificacion_Ruta.findByCreador_Login(loginCreador);
+
+        Ruta ruta = new Ruta();
+        
+        for (Calificacion_Ruta cali: calificacionesUsuario){
+            ruta = cali.getRutaCalificada();
+            if (nombreRuta.equals(ruta.getNombre())){
+                repositorioCalificacion_Ruta.delete(cali);
+            }
+        }
+
+        //7. Actualizar calificación de la ruta
+
+        Ruta actual = repositorioRuta.findByNombre(nombreRuta);
+        repositorioRuta.delete(actual);
+
+        List<Calificacion_Ruta> calificacionesRuta = actual.getCalificaciones();
+        int temp = 0;
+        
+        for (Calificacion_Ruta cali: calificacionesRuta){
+            temp += cali.getCalificacion();
+        }
+
+        actual.setCalificacionPromedio((temp/(calificacionesRuta.size())));
+
+        repositorioRuta.save(actual);
+
+        //8. Registrar calificacion a BD
+
+        Calificacion_Ruta nueva = new Calificacion_Ruta();
+
+        nueva.setCalificacion(Short.parseShort(calificacion));
+        nueva.setReseña(reseña);
+        
+        Usuario u = new Usuario();
+        u = repositorioUsuario.findByLogin(loginCreador);
+        
+        nueva.setCreador(u);
+        nueva.setRutaCalificada(actual);
+        
+        repositorioCalificacion_Ruta.save(nueva);
     }
 
 }

@@ -25,6 +25,7 @@ public class Ruta {
     
     private String nombre;
     private String descripcion;
+    private float calificacionPromedio;
     private List<Pair<String, String>> puntos; ////<Latitud, Longitud>
     @Temporal(TemporalType.DATE)
     private Date fechaCreacion;
