@@ -80,8 +80,8 @@ public class ServicioRuta {
 
         u = repositorioUsuario.findByLogin(loginCreador);
 
-        if (u != null) {
-            throw new Exception("Este nombre de usuario ya existe. Prueba con otro diferente");
+        if (u == null) {
+            throw new Exception("El usuario que crea la ruta no existe en el sistema");
         }
 
         // 9. Registrar ruta
