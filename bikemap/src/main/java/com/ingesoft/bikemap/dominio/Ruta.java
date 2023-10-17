@@ -10,6 +10,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import javafx.util.Pair;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,8 +24,11 @@ public class Ruta {
     long id;
     
     private String nombre;
+    private String descripcion;
+    private List<Pair> puntos; //Pair corresponderá a latitud y longitud del punto visitado por la ruta
     @Temporal(TemporalType.DATE)
     private Date fechaCreacion;
+    
 
     @ManyToOne
     private Usuario creador;
