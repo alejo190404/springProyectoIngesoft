@@ -25,7 +25,7 @@ public class Ruta {
     
     private String nombre;
     private String descripcion;
-    private List<Pair> puntos; //Pair corresponderá a latitud y longitud del punto visitado por la ruta
+    private List<Pair<String, String>> puntos; ////<Latitud, Longitud>
     @Temporal(TemporalType.DATE)
     private Date fechaCreacion;
     
