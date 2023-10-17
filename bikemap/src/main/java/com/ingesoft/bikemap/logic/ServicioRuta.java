@@ -168,7 +168,13 @@ public class ServicioRuta {
         Calificacion_Ruta nueva = new Calificacion_Ruta();
 
         nueva.setCalificacion(Short.parseShort(calificacion));
-        nueva.setReseña(reseña);
+        
+        if (reseñaVacia){
+            nueva.setReseña("Sin reseña");    
+        }
+        else {
+            nueva.setReseña(reseña);
+        }
         
         Usuario u = new Usuario();
         u = repositorioUsuario.findByLogin(loginCreador);
