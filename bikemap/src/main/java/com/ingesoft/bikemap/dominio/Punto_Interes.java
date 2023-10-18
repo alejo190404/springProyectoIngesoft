@@ -40,7 +40,6 @@ public class Punto_Interes {
     private Usuario creador;
 
     @OneToMany(mappedBy="puntoCalificado")
-    @Fetch(FetchMode.JOIN)
     private List<Calificacion_Punto> calificaciones;
     
     @OneToMany(mappedBy="punto") //Preguntar
