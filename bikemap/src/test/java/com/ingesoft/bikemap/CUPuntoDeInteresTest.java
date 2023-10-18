@@ -26,13 +26,13 @@ public class CUPuntoDeInteresTest {
     @Autowired
     ServicioPuntoDeInteres servicio;
     @Autowired
-    private RepositorioPunto_Interes repositorioPunto_Interes;
+    RepositorioPunto_Interes repositorioPunto_Interes;
     @Autowired
-    private RepositorioUsuario repositorioUsuario;
+    RepositorioUsuario repositorioUsuario;
     @Autowired
-    private RepositorioCalificacion_Punto repositorioCalificacion_Punto;
+    RepositorioCalificacion_Punto repositorioCalificacion_Punto;
     @Autowired
-    private RepositorioTipo_Punto repositorioTipo_Punto;
+    RepositorioTipo_Punto repositorioTipo_Punto;
 
     @BeforeEach
     void resetear() {
@@ -52,12 +52,12 @@ public class CUPuntoDeInteresTest {
 
         Usuario uOtro = new Usuario();
 
-            uOtro.setNombreCompleto("Karim Benzema");
-            uOtro.setLogin("parcero");
-            uOtro.setContraseña("secret");
-            uOtro.setCorreoRecuperacion("parcerooos@gmail.com");
+        uOtro.setNombreCompleto("Karim Benzema");
+        uOtro.setLogin("parcero");
+        uOtro.setContraseña("secret");
+        uOtro.setCorreoRecuperacion("parcerooos@gmail.com");
 
-            repositorioUsuario.save(uOtro);
+        repositorioUsuario.save(uOtro);
 
         Tipo_Punto tp = new Tipo_Punto();
 
@@ -91,7 +91,7 @@ public class CUPuntoDeInteresTest {
             // Act
 
             servicio.CalificarPuntoDeInteres(
-                    "Tienda",
+                    "Tienda Bicis",
                     "5",
                     "Muy buen sitio. Parchadito para comprar",
                     "Prueba");
@@ -100,7 +100,7 @@ public class CUPuntoDeInteresTest {
 
         } catch (Exception e) {
             // Assert
-            fail("Error en el sistema al calificar el punto de interes");
+            fail("Error en el sistema al calificar el punto de interes.");
         }
     }
 
@@ -246,17 +246,16 @@ public class CUPuntoDeInteresTest {
             // Act
 
             servicio.CalificarPuntoDeInteres(
-                "Tienda Bicis",
-                "3",
-                "No tan parchadito",
-                "parcero"
-            );
+                    "Tienda Bicis",
+                    "3",
+                    "No tan parchadito",
+                    "parcero");
 
             // Assert
 
             List<Calificacion_Punto> lcp = repositorioCalificacion_Punto.findByCreador_Login("parcero");
 
-            if (lcp.size() != 1){
+            if (lcp.size() != 1) {
                 fail("El sistema no actualizó correctamente una calificación");
             }
 
@@ -273,12 +272,25 @@ public class CUPuntoDeInteresTest {
 
             // Arrange
 
+            Date fecha = Date.valueOf("2023-10-18");
+
             // Act
+
+            servicio.CrearPuntoDeInteres(
+                    "Paradero Pa' Nelsy",
+                    "Un buen lugar para parar",
+                    "30",
+                    "30",
+                    "Tienda",
+                    fecha,
+                    "parcero");
 
             // Assert
 
         } catch (Exception e) {
             // Assert
+
+            fail("El sistema no registró el nuevo punto apropiadamente");
         }
     }
 
@@ -288,9 +300,22 @@ public class CUPuntoDeInteresTest {
 
             // Arrange
 
+            Date fecha = Date.valueOf("2023-10-18");
+
             // Act
 
+            servicio.CrearPuntoDeInteres(
+                    "Paradero Pa' Nelsy",
+                    "Un buen lugar para parar",
+                    "-412",
+                    "30",
+                    "Tienda",
+                    fecha,
+                    "parcero");
+
             // Assert
+
+            fail("El sistema registró un punto con latitud menor a la permitida");
 
         } catch (Exception e) {
             // Assert
@@ -303,9 +328,22 @@ public class CUPuntoDeInteresTest {
 
             // Arrange
 
+            Date fecha = Date.valueOf("2023-10-18");
+
             // Act
 
+            servicio.CrearPuntoDeInteres(
+                    "Paradero Pa' Nelsy",
+                    "Un buen lugar para parar",
+                    "412",
+                    "30",
+                    "Tienda",
+                    fecha,
+                    "parcero");
+
             // Assert
+
+            fail("El sistema registró un punto con latitud mayor a la permitida");
 
         } catch (Exception e) {
             // Assert
@@ -318,9 +356,22 @@ public class CUPuntoDeInteresTest {
 
             // Arrange
 
+            Date fecha = Date.valueOf("2023-10-18");
+
             // Act
 
+            servicio.CrearPuntoDeInteres(
+                    "Paradero Pa' Nelsy",
+                    "Un buen lugar para parar",
+                    "30",
+                    "-222",
+                    "Tienda",
+                    fecha,
+                    "parcero");
+
             // Assert
+
+            fail("El sistema registró un punto con longitud menor a la permitida");
 
         } catch (Exception e) {
             // Assert
@@ -333,9 +384,23 @@ public class CUPuntoDeInteresTest {
 
             // Arrange
 
+            Date fecha = Date.valueOf("2023-10-18");
+
             // Act
 
+            servicio.CrearPuntoDeInteres(
+                "Paradero Pa' Nelsy",
+                "Un buen lugar para parar",
+                "30",
+                "222",
+                "Tienda",
+                fecha,
+                "parcero"
+                );
+
             // Assert
+
+            fail("El sistema registró un punto con longitud mayor a la permitida");
 
         } catch (Exception e) {
             // Assert
@@ -348,9 +413,22 @@ public class CUPuntoDeInteresTest {
 
             // Arrange
 
+            Date fecha = Date.valueOf("2023-10-18");
+
             // Act
 
+            servicio.CrearPuntoDeInteres(
+                    "Paradero Pa' Nelsy",
+                    "Un buen lugar para parar",
+                    "80",
+                    "2",
+                    "Tienda",
+                    fecha,
+                    "parcero");
+
             // Assert
+
+            fail("El sistema registró un punto nuevo en una coordenada existente");
 
         } catch (Exception e) {
             // Assert
@@ -363,7 +441,18 @@ public class CUPuntoDeInteresTest {
 
             // Arrange
 
+            Date fecha = Date.valueOf("2023-10-18");
+
             // Act
+
+            servicio.CrearPuntoDeInteres(
+                    "Paradero Pa' Nelsy",
+                    "Un buen lugar para parar",
+                    "30",
+                    "30",
+                    "Tiendita de barrio",
+                    fecha,
+                    "parcero");
 
             // Assert
 
@@ -382,10 +471,14 @@ public class CUPuntoDeInteresTest {
 
             // Act
 
+            servicio.VisualizarPuntoDeInteres("80", "2");
+
             // Assert
 
         } catch (Exception e) {
             // Assert
+
+            fail("El sistema no permitió visualizar, apropiadamente, un punto existente");
         }
     }
 
@@ -397,7 +490,11 @@ public class CUPuntoDeInteresTest {
 
             // Act
 
+            servicio.VisualizarPuntoDeInteres("2", "-5");
+
             // Assert
+
+            fail("El sistema visualizó un punto que no existe");
 
         } catch (Exception e) {
             // Assert
@@ -412,11 +509,14 @@ public class CUPuntoDeInteresTest {
 
             // Act
 
+            servicio.VisualizarPuntoDeInteres("80", "2");
+
             // Assert
 
         } catch (Exception e) {
             // Assert
+
+            fail("El sistema no permitió visualizar");
         }
     }
-
 }
