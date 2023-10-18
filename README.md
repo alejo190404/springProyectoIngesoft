@@ -4,3 +4,10 @@
 
 ---
 
+## Autores
+
+Este repositorio es creado a partir de una asignación de la clase Fundamentos de Ingeniería de Software, y es desarrollado por un gurpo conformado por:
+  - Adrián Ruiz
+  - Valentina García
+  - Juliana Bejarano
+  - Alejandro Barragán
