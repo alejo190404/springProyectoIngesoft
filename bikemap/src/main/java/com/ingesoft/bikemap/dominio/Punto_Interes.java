@@ -3,9 +3,6 @@ package com.ingesoft.bikemap.dominio;
 import java.sql.Date;
 import java.util.List;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
