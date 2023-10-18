@@ -26,12 +26,16 @@ public class CURutaTest {
 
     @Autowired
     ServicioRuta servicio;
+
     @Autowired
-    private RepositorioRuta repositorioRuta;
+    RepositorioRuta repositorioRuta;
+
     @Autowired
-    private RepositorioUsuario repositorioUsuario;
+    RepositorioUsuario repositorioUsuario;
+
     @Autowired
-    private RepositorioCalificacion_Ruta repositorioCalificacion_Ruta;
+    RepositorioCalificacion_Ruta repositorioCalificacion_Ruta;
+    
 
     @BeforeEach
     void resetear() {
