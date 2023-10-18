@@ -50,6 +50,15 @@ public class CUPuntoDeInteresTest {
 
         repositorioUsuario.save(u);
 
+        Usuario uOtro = new Usuario();
+
+            uOtro.setNombreCompleto("Karim Benzema");
+            uOtro.setLogin("parcero");
+            uOtro.setContraseña("secret");
+            uOtro.setCorreoRecuperacion("parcerooos@gmail.com");
+
+            repositorioUsuario.save(uOtro);
+
         Tipo_Punto tp = new Tipo_Punto();
 
         tp.setNombre("Tienda");
@@ -130,8 +139,7 @@ public class CUPuntoDeInteresTest {
                     "Tienda",
                     "7",
                     "Muy buen sitio. Parchadito para comprar",
-                    "Prueba"
-                );
+                    "Prueba");
 
             // Assert
 
@@ -154,8 +162,7 @@ public class CUPuntoDeInteresTest {
                     "Tienda",
                     "-2",
                     "Muy buen sitio. Parchadito para comprar",
-                    "Prueba"
-                );
+                    "Prueba");
 
             // Assert
 
@@ -178,15 +185,14 @@ public class CUPuntoDeInteresTest {
                     "Tienda",
                     "-2",
                     "Muy buen sitio. Parchadito para comprar",
-                    "Prueba"
-                );
+                    "Prueba");
 
             // Assert
 
             List<Calificacion_Punto> cps = repositorioCalificacion_Punto.findByCreador_Login("Prueba");
-            for (Calificacion_Punto cali: cps){
-                if (cali.getPuntoCalificado().getNombre() == "Tienda Bicis"){
-                    if (cali.getReseña() != "Sin reseña"){
+            for (Calificacion_Punto cali : cps) {
+                if (cali.getPuntoCalificado().getNombre() == "Tienda Bicis") {
+                    if (cali.getReseña() != "Sin reseña") {
                         fail("El sistema registró erróneamente la reseña de una calificación");
                     }
                 }
@@ -203,9 +209,19 @@ public class CUPuntoDeInteresTest {
 
             // Arrange
 
+            String texto1000caracteres = "Este es un cuento de más de 1000 caracteres. Ernesto Gurrián se escondió tras el coche. Joaquín a su lado empuñó el arma reglamentaria. Desde allí podían ver la puerta abierta por donde saldrían. Los de dentro se habían cargado, hace tres días a Tomás Ojibe un compañero encantador con una hija de meses, tanto Joaquín como Ernesto habían estado en el bautizo. El coordinador de la operación lo dijo claramente en la reunión previa: “en caso de duda disparen, estos hijos de puta no se nos pueden escapar”. Joaquín oía su propio sobrealiento, sentía la boca seca, tenía ganas de ver la cara de mierda de aquellos tipejos a los que no conocía ni en fotos. Se fue abriendo la puerta. Ernesto tenía mejor ángulo y desde allí, fue el primero en ver y reconocer los zapatos de la chica. Joaquín le miró de reojo. Vio como de repente le empezó a temblar la mano aferrada a la pistola. Pasaron tres segundos. Vio sus ojos encharcados con una pena de padre pero una angustia de ira. Vio a Ojibe con su hija en brazos junto al baptisterio. Vio a su hija, a la suya en la calle. Joaquín grito “!Alto policía tirad las armas!” luego tres disparos. “¿Qué haces Ernesto?” le gritó. Solo murió la chica y Ernesto vivió muerto para siempre.";
+
             // Act
 
+            servicio.CalificarPuntoDeInteres(
+                    "Tienda",
+                    "5",
+                    texto1000caracteres,
+                    "Prueba");
+
             // Assert
+
+            fail("El sistema regsitra una calificación con reseña con más de 1000 caracters");
 
         } catch (Exception e) {
             // Assert
@@ -218,9 +234,31 @@ public class CUPuntoDeInteresTest {
 
             // Arrange
 
+            Calificacion_Punto cp = new Calificacion_Punto();
+
+            cp.setReseña("Parchadito");
+            cp.setCalificacion(Short.parseShort("5"));
+            cp.setCreador(repositorioUsuario.findByLogin("parcero"));
+            cp.setPuntoCalificado(repositorioPunto_Interes.findByNombre("Tienda Bicis"));
+
+            repositorioCalificacion_Punto.save(cp);
+
             // Act
 
+            servicio.CalificarPuntoDeInteres(
+                "Tienda Bicis",
+                "3",
+                "No tan parchadito",
+                "parcero"
+            );
+
             // Assert
+
+            List<Calificacion_Punto> lcp = repositorioCalificacion_Punto.findByCreador_Login("parcero");
+
+            if (lcp.size() != 1){
+                fail("El sistema no actualizó correctamente una calificación");
+            }
 
         } catch (Exception e) {
             // Assert
