@@ -26,6 +26,7 @@ jobs:
       run: docker compose up
       
     - name: Build with Maven
-      run: mvn -B package --file bikemap/pom.xml 
+      run: mvn -B package -DskipTests --file bikemap/pom.xml 
 
-
+    - name: Prueba
+      run: mvn test
