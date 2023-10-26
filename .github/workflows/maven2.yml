@@ -28,5 +28,5 @@ jobs:
         cache: maven
         
     - name: Build with Maven
-      run: sdk default java 17.0.8.fz-zulu;mvn -B package -DskipTests --file bikemap/pom.xml
+      run: cd bikemap; mvn -B package -DskipTests --file bikemap/pom.xml
 
