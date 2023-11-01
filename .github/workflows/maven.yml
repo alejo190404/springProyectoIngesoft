@@ -23,7 +23,7 @@ jobs:
         cache: maven
 
     - name: Ejecutar mySQL
-      run: docker compose up
+      run: docker compose up -d
       
     - name: Build with Maven
       run: mvn -B package -DskipTests --file bikemap/pom.xml 
