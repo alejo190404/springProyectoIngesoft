@@ -47,7 +47,7 @@ public class CUUsuarioTest {
 
     @BeforeEach
     void resetear() {
-        
+        repoUsuario.deleteAll();
     }
 
     // CU Iniciar Sesión
