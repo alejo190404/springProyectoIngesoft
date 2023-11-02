@@ -7,6 +7,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.ingesoft.bikemap.dataAccess.RepositorioCalificacion_Punto;
+import com.ingesoft.bikemap.dataAccess.RepositorioCalificacion_Ruta;
+import com.ingesoft.bikemap.dataAccess.RepositorioFavorito_Punto;
+import com.ingesoft.bikemap.dataAccess.RepositorioFavorito_Ruta;
+import com.ingesoft.bikemap.dataAccess.RepositorioPunto_Interes;
+import com.ingesoft.bikemap.dataAccess.RepositorioRuta;
 import com.ingesoft.bikemap.dataAccess.RepositorioUsuario;
 import com.ingesoft.bikemap.dominio.Usuario;
 import com.ingesoft.bikemap.logic.ServicioUsuario;
@@ -19,8 +25,32 @@ public class CUUsuarioTest {
     @Autowired
     RepositorioUsuario repoUsuario;
 
+    @Autowired
+    RepositorioCalificacion_Punto repoCalificacionP;
+
+    @Autowired
+    RepositorioCalificacion_Ruta repoCalificacionR;
+
+    @Autowired
+    RepositorioFavorito_Punto repoFavoritoP;
+
+    @Autowired
+    RepositorioFavorito_Ruta repoFavortioR;
+
+    @Autowired
+    RepositorioPunto_Interes repoPunto;
+
+    @Autowired
+    RepositorioRuta repoRuta;
+
     @BeforeEach
     void resetear() {
+        repoRuta.deleteAll();
+        repoPunto.deleteAll();
+        repoFavortioR.deleteAll();
+        repoFavoritoP.deleteAll();
+        repoCalificacionR.deleteAll();
+        repoCalificacionP.deleteAll();
         repoUsuario.deleteAll();
     }
 
