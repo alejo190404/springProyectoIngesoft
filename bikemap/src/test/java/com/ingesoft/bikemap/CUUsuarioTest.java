@@ -45,13 +45,13 @@ public class CUUsuarioTest {
 
     @BeforeEach
     void resetear() {
+        repoUsuario.deleteAll();
         repoRuta.deleteAll();
         repoPunto.deleteAll();
         repoFavortioR.deleteAll();
         repoFavoritoP.deleteAll();
         repoCalificacionR.deleteAll();
         repoCalificacionP.deleteAll();
-        repoUsuario.deleteAll();
     }
 
     // CU Iniciar Sesión
