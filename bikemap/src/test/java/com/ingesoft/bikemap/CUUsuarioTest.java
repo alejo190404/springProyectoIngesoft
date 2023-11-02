@@ -17,6 +17,8 @@ import com.ingesoft.bikemap.dataAccess.RepositorioUsuario;
 import com.ingesoft.bikemap.dominio.Usuario;
 import com.ingesoft.bikemap.logic.ServicioUsuario;
 
+import jakarta.transaction.Transactional;
+
 @SpringBootTest
 public class CUUsuarioTest {
     @Autowired
@@ -45,18 +47,13 @@ public class CUUsuarioTest {
 
     @BeforeEach
     void resetear() {
-        repoUsuario.deleteAll();
-        repoRuta.deleteAll();
-        repoPunto.deleteAll();
-        repoFavortioR.deleteAll();
-        repoFavoritoP.deleteAll();
-        repoCalificacionR.deleteAll();
-        repoCalificacionP.deleteAll();
+        
     }
 
     // CU Iniciar Sesión
 
     @Test
+    @Transactional
     void IniciarSesionExitoso() throws Exception {
         try {
             // Arrange
@@ -81,6 +78,7 @@ public class CUUsuarioTest {
     }
 
     @Test
+    @Transactional
     void IniciarSesionUsuarioNoExiste() throws Exception {
         try {
             // Arrange
@@ -100,6 +98,7 @@ public class CUUsuarioTest {
     }
 
     @Test
+    @Transactional
     void IniciarSesionContraseñaIncorrecta() throws Exception {
         try {
             // Arrange
@@ -127,6 +126,7 @@ public class CUUsuarioTest {
     // CU Registrar Usuario
 
     @Test
+    @Transactional
     void RegistrarUsuarioExitoso() throws Exception {
 
         try {
@@ -162,6 +162,7 @@ public class CUUsuarioTest {
     }
 
     @Test
+    @Transactional
     void probarRegistroNombreExistente() throws Exception {
         try {
             // Arrange
@@ -196,6 +197,7 @@ public class CUUsuarioTest {
     }
 
     @Test
+    @Transactional
     void probarRegistroContraseniaCorta() throws Exception {
         try {
             // Arrange
@@ -221,6 +223,7 @@ public class CUUsuarioTest {
     }
 
     @Test
+    @Transactional
     void probarRegistroContraseniaDiferente() throws Exception {
         try {
             // Arrange
@@ -245,6 +248,7 @@ public class CUUsuarioTest {
     }
 
     @Test
+    @Transactional
     void probarRegistroCorreoSinSintaxisUno() throws Exception {
         try {
 
@@ -270,6 +274,7 @@ public class CUUsuarioTest {
     }
 
     @Test
+    @Transactional
     void probarRegistroCorreoSinSintaxisDos() throws Exception {
 
         try {
@@ -296,6 +301,7 @@ public class CUUsuarioTest {
     }
 
     @Test
+    @Transactional
     void probarRegistroCorreoExistente() throws Exception {
         try {
             // Arrange
@@ -328,6 +334,7 @@ public class CUUsuarioTest {
     }
 
     @Test
+    @Transactional
     void probarRegsistroCorreosDiferentes() throws Exception {
         try {
             // Arrange
