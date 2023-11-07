@@ -3,6 +3,7 @@ package com.ingesoft.bikemap;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,6 +31,7 @@ public class CUUsuarioTest {
 
     @Test
     @Transactional
+    @Tag("Usuario")
     void IniciarSesionExitoso() throws Exception {
         try {
             // Arrange
@@ -55,6 +57,7 @@ public class CUUsuarioTest {
 
     @Test
     @Transactional
+    @Tag("Usuario")
     void IniciarSesionUsuarioNoExiste() throws Exception {
         try {
             // Arrange
@@ -75,6 +78,7 @@ public class CUUsuarioTest {
 
     @Test
     @Transactional
+    @Tag("Usuario")
     void IniciarSesionContraseñaIncorrecta() throws Exception {
         try {
             // Arrange
@@ -103,6 +107,8 @@ public class CUUsuarioTest {
 
     @Test
     @Transactional
+    @Tag("Usuario")
+    @Tag("Crear")
     void RegistrarUsuarioExitoso() throws Exception {
 
         try {
@@ -139,6 +145,8 @@ public class CUUsuarioTest {
 
     @Test
     @Transactional
+    @Tag("Usuario")
+    @Tag("Crear")
     void probarRegistroNombreExistente() throws Exception {
         try {
             // Arrange
@@ -174,6 +182,8 @@ public class CUUsuarioTest {
 
     @Test
     @Transactional
+    @Tag("Usuario")
+    @Tag("Crear")
     void probarRegistroContraseniaCorta() throws Exception {
         try {
             // Arrange
@@ -200,6 +210,8 @@ public class CUUsuarioTest {
 
     @Test
     @Transactional
+    @Tag("Usuario")
+    @Tag("Crear")
     void probarRegistroContraseniaDiferente() throws Exception {
         try {
             // Arrange
@@ -225,6 +237,8 @@ public class CUUsuarioTest {
 
     @Test
     @Transactional
+    @Tag("Usuario")
+    @Tag("Crear")
     void probarRegistroCorreoSinSintaxisUno() throws Exception {
         try {
 
@@ -251,6 +265,8 @@ public class CUUsuarioTest {
 
     @Test
     @Transactional
+    @Tag("Usuario")
+    @Tag("Crear")
     void probarRegistroCorreoSinSintaxisDos() throws Exception {
 
         try {
@@ -278,6 +294,8 @@ public class CUUsuarioTest {
 
     @Test
     @Transactional
+    @Tag("Usuario")
+    @Tag("Crear")
     void probarRegistroCorreoExistente() throws Exception {
         try {
             // Arrange
@@ -311,6 +329,8 @@ public class CUUsuarioTest {
 
     @Test
     @Transactional
+    @Tag("Usuario")
+    @Tag("Crear")
     void probarRegsistroCorreosDiferentes() throws Exception {
         try {
             // Arrange

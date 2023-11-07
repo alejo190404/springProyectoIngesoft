@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -84,6 +85,8 @@ public class CUPuntoDeInteresTest {
     // CU Calificar punto de interes
 
     @Test
+    @Tag("Calificar")
+    @Tag("PuntoInteres")
     void CalificarPuntoExitoso() throws Exception {
         try {
             // Arrange
@@ -105,6 +108,8 @@ public class CUPuntoDeInteresTest {
     }
 
     @Test
+    @Tag("Calificar")
+    @Tag("PuntoInteres")
     void CalificarPuntoCalificacionNoDecimal() throws Exception {
         try {
 
@@ -128,6 +133,8 @@ public class CUPuntoDeInteresTest {
     }
 
     @Test
+    @Tag("PuntoInteres")
+    @Tag("Calificar")
     void CalificarPuntoCalificacionFueraLimite1() throws Exception {
         try {
 
@@ -151,6 +158,8 @@ public class CUPuntoDeInteresTest {
     }
 
     @Test
+    @Tag("PuntoInteres")
+    @Tag("Calificar")
     void CalificarPuntoCalificacionFueraLimite2() throws Exception {
         try {
 
@@ -174,6 +183,8 @@ public class CUPuntoDeInteresTest {
     }
 
     @Test
+    @Tag("PuntoInteres")
+    @Tag("Calificar")
     void CalificarPuntoReseñaVacia() throws Exception {
         try {
 
@@ -204,6 +215,8 @@ public class CUPuntoDeInteresTest {
     }
 
     @Test
+    @Tag("PuntoInteres")
+    @Tag("Calificar")
     void CalificarPuntoReseñaLarga() throws Exception {
         try {
 
@@ -229,6 +242,8 @@ public class CUPuntoDeInteresTest {
     }
 
     @Test
+    @Tag("PuntoInteres")
+    @Tag("Calificar")
     void CalificarPuntoActualizarCalificacionExistente() throws Exception {
         try {
 
@@ -267,6 +282,8 @@ public class CUPuntoDeInteresTest {
     // CU Crear punto
 
     @Test
+    @Tag("PuntoInteres")
+    @Tag("Crear")
     void CrearPuntoExitoso() throws Exception {
         try {
 
@@ -295,6 +312,8 @@ public class CUPuntoDeInteresTest {
     }
 
     @Test
+    @Tag("PuntoInteres")
+    @Tag("Crear")
     void CrearPuntoLatitudErronea1() throws Exception {
         try {
 
@@ -323,6 +342,8 @@ public class CUPuntoDeInteresTest {
     }
 
     @Test
+    @Tag("PuntoInteres")
+    @Tag("Crear")
     void CrearPuntoLatitudErronea2() throws Exception {
         try {
 
@@ -351,6 +372,8 @@ public class CUPuntoDeInteresTest {
     }
 
     @Test
+    @Tag("PuntoInteres")
+    @Tag("Crear")
     void CrearPuntoLongitudErronea1() throws Exception {
         try {
 
@@ -379,6 +402,8 @@ public class CUPuntoDeInteresTest {
     }
 
     @Test
+    @Tag("PuntoInteres")
+    @Tag("Crear")
     void CrearPuntoLongitudErronea2() throws Exception {
         try {
 
@@ -408,6 +433,8 @@ public class CUPuntoDeInteresTest {
     }
 
     @Test
+    @Tag("PuntoInteres")
+    @Tag("Crear")
     void CrearPuntoCoordenadasExistentes() throws Exception {
         try {
 
@@ -436,6 +463,8 @@ public class CUPuntoDeInteresTest {
     }
 
     @Test
+    @Tag("PuntoInteres")
+    @Tag("Crear")
     void CrearPuntoCategoriaOtro() throws Exception {
         try {
 
@@ -464,6 +493,7 @@ public class CUPuntoDeInteresTest {
     // CU Visualizar punto
 
     @Test
+    @Tag("PuntoInteres")
     void VisualizarPuntoExitoso() throws Exception {
         try {
 
@@ -483,6 +513,7 @@ public class CUPuntoDeInteresTest {
     }
 
     @Test
+    @Tag("PuntoInteres")
     void VisualizarPuntoCoordenadasVacias() throws Exception {
         try {
 
@@ -502,6 +533,7 @@ public class CUPuntoDeInteresTest {
     }
 
     @Test
+    @Tag("PuntoInteres")
     void VisualizarPuntoSinCalificaciones() throws Exception {
         try {
 

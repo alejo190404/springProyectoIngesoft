@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -47,6 +48,8 @@ public class CURutaTest {
     // CU Crear Ruta
 
     @Test
+    @Tag("Crear")
+    @Tag("Ruta")
     void CrearRutaExistoso() throws Exception {
         try {
             // Arrange
@@ -88,6 +91,8 @@ public class CURutaTest {
     }
 
     @Test
+    @Tag("Crear")
+    @Tag("Ruta")
     void CrearRutaCoordenadasLatitudIncorrecta1() throws Exception {
         try {
             // Arrange
@@ -129,6 +134,8 @@ public class CURutaTest {
     }
 
     @Test
+    @Tag("Crear")
+    @Tag("Ruta")
     void CrearRutaCoordenadasLatitudIncorrecta2() throws Exception {
         try {
             // Arrange
@@ -170,6 +177,8 @@ public class CURutaTest {
     }
 
     @Test
+    @Tag("Crear")
+    @Tag("Ruta")
     void CrearRutaCoordenadasLongitudIncorrecta1() throws Exception {
         try {
 
@@ -212,6 +221,8 @@ public class CURutaTest {
     }
 
     @Test
+    @Tag("Crear")
+    @Tag("Ruta")
     void CrearRutaCoordenadasLongitudIncorrecta2() throws Exception {
         try {
 
@@ -254,6 +265,8 @@ public class CURutaTest {
     }
 
     @Test
+    @Tag("Crear")
+    @Tag("Ruta")
     void CrearRutaNombreExistente() throws Exception {
         try {
             // Arrange
@@ -319,6 +332,8 @@ public class CURutaTest {
     }
 
     @Test
+    @Tag("Crear")
+    @Tag("Ruta")
     void CrearRutaNombreLargo() throws Exception {
         try {
             // Arrange
@@ -360,6 +375,8 @@ public class CURutaTest {
     }
 
     @Test
+    @Tag("Crear")
+    @Tag("Ruta")
     void CrearRutaDescripcionVacia() throws Exception {
         try {
             // Arrange
@@ -405,6 +422,8 @@ public class CURutaTest {
     }
 
     @Test
+    @Tag("Crear")
+    @Tag("Ruta")
     void CrearRutaDescripcionLarga() throws Exception {
         try {
             // Arrange
@@ -448,6 +467,8 @@ public class CURutaTest {
     }
 
     @Test
+    @Tag("Crear")
+    @Tag("Ruta")
     void CrearRutaUsuarioNoExiste() throws Exception {
         try {
             // Arrange
@@ -482,6 +503,8 @@ public class CURutaTest {
     // CU Calificar Ruta
 
     @Test
+    @Tag("Calificar")
+    @Tag("Ruta")
     void CalificarRutaExitoso() throws Exception {
         try {
             // Arrange
@@ -543,6 +566,8 @@ public class CURutaTest {
     }
 
     @Test
+    @Tag("Calificar")
+    @Tag("Ruta")
     void CalificarRutaReseñaVacia() throws Exception {
         try {
             // Arrange
@@ -612,6 +637,8 @@ public class CURutaTest {
     }
 
     @Test
+    @Tag("Calificar")
+    @Tag("Ruta")
     void CalificarRutaReseñaLarga() throws Exception {
         try {
             // Arrange
@@ -676,6 +703,8 @@ public class CURutaTest {
     }
 
     @Test
+    @Tag("Calificar")
+    @Tag("Ruta")
     void CalificarRutaCalificacionExistente() throws Exception {
         try {
             // Arrange
