@@ -94,7 +94,7 @@ public class ServicioRuta {
         } else {
             r.setDescripcion(descripcion);
         }
-        r.setPuntos(puntosRecorridos);
+        //r.setPuntos(puntosRecorridos);
         r.setFechaCreacion(fecha);
         r.setCreador(u);
         r.setCalificaciones(null);

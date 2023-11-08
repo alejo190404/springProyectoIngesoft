@@ -304,7 +304,7 @@ public class CURutaTest {
             puntos.add(1, p2);
             puntos.add(2, p3);
 
-            r.setPuntos(puntos);
+            //r.setPuntos(puntos);
             r.setFechaCreacion(fecha);
             r.setCreador(u);
             
@@ -542,7 +542,7 @@ public class CURutaTest {
             puntos.add(1, p2);
             puntos.add(2, p3);
 
-            r.setPuntos(puntos);
+            //r.setPuntos(puntos);
             r.setFechaCreacion(fecha);
             r.setCreador(u);
 
@@ -605,7 +605,7 @@ public class CURutaTest {
             puntos.add(1, p2);
             puntos.add(2, p3);
 
-            r.setPuntos(puntos);
+            //r.setPuntos(puntos);
             r.setFechaCreacion(fecha);
             r.setCreador(u);
 
@@ -676,7 +676,7 @@ public class CURutaTest {
             puntos.add(1, p2);
             puntos.add(2, p3);
 
-            r.setPuntos(puntos);
+            //r.setPuntos(puntos);
             r.setFechaCreacion(fecha);
             r.setCreador(u);
 
@@ -742,7 +742,7 @@ public class CURutaTest {
             puntos.add(1, p2);
             puntos.add(2, p3);
 
-            r.setPuntos(puntos);
+            //r.setPuntos(puntos);
             r.setFechaCreacion(fecha);
             r.setCreador(u);
 
