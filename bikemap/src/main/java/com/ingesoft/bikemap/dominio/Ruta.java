@@ -13,7 +13,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import javafx.util.Pair;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,7 +28,7 @@ public class Ruta {
     private String nombre;
     private String descripcion;
     private float calificacionPromedio;
-    private List<Pair<String, String>> puntos; ////<Latitud, Longitud>
+    // private List<Pair<String, String>> puntos; ////<Latitud, Longitud>
     @Temporal(TemporalType.DATE)
     private Date fechaCreacion;
     
