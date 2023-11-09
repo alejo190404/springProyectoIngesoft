@@ -13,8 +13,6 @@ import com.ingesoft.bikemap.dominio.Calificacion_Ruta;
 import com.ingesoft.bikemap.dominio.Ruta;
 import com.ingesoft.bikemap.dominio.Usuario;
 
-import javafx.util.Pair;
-
 @Service
 public class ServicioRuta {
 
@@ -28,29 +26,36 @@ public class ServicioRuta {
     public void CrearRuta(
             String nombre, // 2
             String descripcion, // 4
-            List<Pair<String, String>> puntosRecorridos, // <Latitud, Longitud>
+            List<String> puntosRecorridos, // <Latitud, Longitud>
             Date fecha,
             String loginCreador) throws Exception {
 
         Ruta rPrueba = new Ruta();
 
+        int i = 0;
+
         // 1. Validar coordenadas
 
-        for (Pair<String, String> pair : puntosRecorridos) {
-            if (Float.parseFloat(pair.getKey()) > (90) || Float.parseFloat(pair.getKey()) < (-90)) { // Latitud
-                throw new Exception("Error al recibir alguno de los puntos. Sus coordenadas no cumplen los requisitos");
+        for (String x: puntosRecorridos) {
+            if (i %2 == 0){
+                if (Float.parseFloat(puntosRecorridos.get(i)) > 90 || Float.parseFloat(puntosRecorridos.get(i)) < (-90)){
+                    throw new Exception("Error al recibir alguno de los puntos. Sus coordenadas no cumplen los requisitos");
+                }
+            } else {
+                if (Float.parseFloat(puntosRecorridos.get(i)) > 180 || Float.parseFloat(puntosRecorridos.get(i)) < (-180)){
+                    throw new Exception("Error al recibir alguno de los puntos. Sus coordenadas no cumplen los requisitos");
+                }
             }
-
-            if ((Float.parseFloat(pair.getValue()) > (180)) || (Float.parseFloat(pair.getValue()) < (-180))) { // Longitud
-                throw new Exception("Error al recibir alguno de los puntos. Sus coordenadas no cumplen los requisitos");
-            }
+            i++;
         }
 
         // 4. Validar nombre no existe
 
         rPrueba = repositorioRuta.findByNombre(nombre);
 
-        if (!rPrueba.equals(null)) {
+        
+        
+        if (rPrueba != null) {
             throw new Exception("El nombre de ruta ya existe en el sistema");
         }
 

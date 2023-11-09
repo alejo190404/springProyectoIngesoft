@@ -6,21 +6,22 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.ingesoft.bikemap.dataAccess.RepositorioCalificacion_Ruta;
+import com.ingesoft.bikemap.dataAccess.RepositorioPunto_Interes;
 import com.ingesoft.bikemap.dataAccess.RepositorioRuta;
 import com.ingesoft.bikemap.dataAccess.RepositorioUsuario;
 import com.ingesoft.bikemap.dominio.Calificacion_Ruta;
 import com.ingesoft.bikemap.dominio.Ruta;
 import com.ingesoft.bikemap.dominio.Usuario;
 import com.ingesoft.bikemap.logic.ServicioRuta;
-
-import javafx.util.Pair;
 
 @SpringBootTest
 public class CURutaTest {
@@ -36,13 +37,28 @@ public class CURutaTest {
 
     @Autowired
     RepositorioCalificacion_Ruta repositorioCalificacion_Ruta;
+
+    @Autowired
+    RepositorioPunto_Interes repoPunto;
+
+    @Autowired
+    JdbcTemplate simpleJdbcTemplate;
     
 
     @BeforeEach
     void resetear() {
-        repositorioRuta.deleteAll();
+        simpleJdbcTemplate.execute("SET REFERENTIAL_INTEGRITY FALSE;");
+        
+        repoPunto.deleteAll();
         repositorioUsuario.deleteAll();
+        repositorioRuta.deleteAll();
         repositorioCalificacion_Ruta.deleteAll();
+
+    }
+
+    @AfterEach
+    void resetearOtraVez(){
+        simpleJdbcTemplate.execute("SET REFERENTIAL_INTEGRITY TRUE;");
     }
 
     // CU Crear Ruta
@@ -64,13 +80,20 @@ public class CURutaTest {
             repositorioUsuario.save(u);
 
             Date fecha = Date.valueOf("2023-10-17");
-            Pair<String, String> p1 = new Pair<String, String>("4", "6");
-            Pair<String, String> p2 = new Pair<String, String>("5", "7");
-            Pair<String, String> p3 = new Pair<String, String>("6", "8");
-            List<Pair<String, String>> puntos = new ArrayList<>();
-            puntos.add(0, p1);
-            puntos.add(1, p2);
-            puntos.add(2, p3);
+            String p1lt = "4";
+            String p1lg = "6";
+            String p2lt = "5";
+            String p2lg = "7";
+            String p3lt = "6";
+            String p3lg = "8";
+            
+            List<String> puntos = new ArrayList<>();
+            puntos.add(p1lt);
+            puntos.add(p1lg);
+            puntos.add(p2lt);
+            puntos.add(p2lg);
+            puntos.add(p3lt);
+            puntos.add(p3lg);
 
             // Act
 
@@ -86,7 +109,7 @@ public class CURutaTest {
         } catch (Exception e) {
             // Assert
 
-            fail("El sistema no registró un usuario que debió");
+            fail("El sistema registró una ruta que no debia porque " + e.getMessage());
         }
     }
 
@@ -107,13 +130,20 @@ public class CURutaTest {
             repositorioUsuario.save(u);
 
             Date fecha = Date.valueOf("2023-10-17");
-            Pair<String, String> p1 = new Pair<String, String>("4", "6");
-            Pair<String, String> p2 = new Pair<String, String>("5", "7");
-            Pair<String, String> p3 = new Pair<String, String>("91", "8");
-            List<Pair<String, String>> puntos = new ArrayList<>();
-            puntos.add(0, p1);
-            puntos.add(1, p2);
-            puntos.add(2, p3);
+            String p1lt = "4";
+            String p1lg = "6";
+            String p2lt = "5";
+            String p2lg = "7";
+            String p3lt = "91";
+            String p3lg = "8";
+            
+            List<String> puntos = new ArrayList<>();
+            puntos.add(p1lt);
+            puntos.add(p1lg);
+            puntos.add(p2lt);
+            puntos.add(p2lg);
+            puntos.add(p3lt);
+            puntos.add(p3lg);
 
             // Act
 
@@ -150,13 +180,21 @@ public class CURutaTest {
             repositorioUsuario.save(u);
 
             Date fecha = Date.valueOf("2023-10-17");
-            Pair<String, String> p1 = new Pair<String, String>("4", "6");
-            Pair<String, String> p2 = new Pair<String, String>("5", "7");
-            Pair<String, String> p3 = new Pair<String, String>("-100", "8");
-            List<Pair<String, String>> puntos = new ArrayList<>();
-            puntos.add(0, p1);
-            puntos.add(1, p2);
-            puntos.add(2, p3);
+
+            String p1lt = "4";
+            String p1lg = "6";
+            String p2lt = "5";
+            String p2lg = "7";
+            String p3lt = "-100";
+            String p3lg = "8";
+            
+            List<String> puntos = new ArrayList<>();
+            puntos.add(p1lt);
+            puntos.add(p1lg);
+            puntos.add(p2lt);
+            puntos.add(p2lg);
+            puntos.add(p3lt);
+            puntos.add(p3lg);
 
             // Act
 
@@ -194,13 +232,21 @@ public class CURutaTest {
             repositorioUsuario.save(u);
 
             Date fecha = Date.valueOf("2023-10-17");
-            Pair<String, String> p1 = new Pair<String, String>("4", "6");
-            Pair<String, String> p2 = new Pair<String, String>("5", "7");
-            Pair<String, String> p3 = new Pair<String, String>("6", "-195");
-            List<Pair<String, String>> puntos = new ArrayList<>();
-            puntos.add(0, p1);
-            puntos.add(1, p2);
-            puntos.add(2, p3);
+
+            String p1lt = "4";
+            String p1lg = "6";
+            String p2lt = "5";
+            String p2lg = "7";
+            String p3lt = "6";
+            String p3lg = "-195";
+            
+            List<String> puntos = new ArrayList<>();
+            puntos.add(p1lt);
+            puntos.add(p1lg);
+            puntos.add(p2lt);
+            puntos.add(p2lg);
+            puntos.add(p3lt);
+            puntos.add(p3lg);
 
             // Act
 
@@ -238,13 +284,21 @@ public class CURutaTest {
             repositorioUsuario.save(u);
 
             Date fecha = Date.valueOf("2023-10-17");
-            Pair<String, String> p1 = new Pair<String, String>("4", "6");
-            Pair<String, String> p2 = new Pair<String, String>("5", "7");
-            Pair<String, String> p3 = new Pair<String, String>("6", "235");
-            List<Pair<String, String>> puntos = new ArrayList<>();
-            puntos.add(0, p1);
-            puntos.add(1, p2);
-            puntos.add(2, p3);
+
+            String p1lt = "4";
+            String p1lg = "6";
+            String p2lt = "5";
+            String p2lg = "7";
+            String p3lt = "6";
+            String p3lg = "235";
+            
+            List<String> puntos = new ArrayList<>();
+            puntos.add(p1lt);
+            puntos.add(p1lg);
+            puntos.add(p2lt);
+            puntos.add(p2lg);
+            puntos.add(p3lt);
+            puntos.add(p3lg);
 
             // Act
 
@@ -296,13 +350,21 @@ public class CURutaTest {
             r.setCalificacionPromedio(Float.parseFloat("0.0"));
 
             Date fecha = Date.valueOf("2023-10-17");
-            Pair<String, String> p1 = new Pair<String, String>("4", "6");
-            Pair<String, String> p2 = new Pair<String, String>("5", "7");
-            Pair<String, String> p3 = new Pair<String, String>("6", "8");
-            List<Pair<String, String>> puntos = new ArrayList<>();
-            puntos.add(0, p1);
-            puntos.add(1, p2);
-            puntos.add(2, p3);
+
+            String p1lt = "4";
+            String p1lg = "6";
+            String p2lt = "5";
+            String p2lg = "7";
+            String p3lt = "6";
+            String p3lg = "8";
+            
+            List<String> puntos = new ArrayList<>();
+            puntos.add(p1lt);
+            puntos.add(p1lg);
+            puntos.add(p2lt);
+            puntos.add(p2lg);
+            puntos.add(p3lt);
+            puntos.add(p3lg);
 
             //r.setPuntos(puntos);
             r.setFechaCreacion(fecha);
@@ -312,11 +374,8 @@ public class CURutaTest {
 
             // Act
 
-            Pair<String, String> p4 = new Pair<String, String>("6", "8");
-            puntos.add(3, p4);
-
             servicio.CrearRuta(
-                    "Unviersidades",
+                    "Universidades",
                     "Otro recorrido",
                     puntos,
                     fecha,
@@ -348,13 +407,20 @@ public class CURutaTest {
             repositorioUsuario.save(u);
 
             Date fecha = Date.valueOf("2023-10-17");
-            Pair<String, String> p1 = new Pair<String, String>("4", "6");
-            Pair<String, String> p2 = new Pair<String, String>("5", "7");
-            Pair<String, String> p3 = new Pair<String, String>("6", "8");
-            List<Pair<String, String>> puntos = new ArrayList<>();
-            puntos.add(0, p1);
-            puntos.add(1, p2);
-            puntos.add(2, p3);
+            String p1lt = "4";
+            String p1lg = "6";
+            String p2lt = "5";
+            String p2lg = "7";
+            String p3lt = "6";
+            String p3lg = "8";
+            
+            List<String> puntos = new ArrayList<>();
+            puntos.add(p1lt);
+            puntos.add(p1lg);
+            puntos.add(p2lt);
+            puntos.add(p2lg);
+            puntos.add(p3lt);
+            puntos.add(p3lg);
 
             // Act
 
@@ -391,13 +457,20 @@ public class CURutaTest {
             repositorioUsuario.save(u);
 
             Date fecha = Date.valueOf("2023-10-17");
-            Pair<String, String> p1 = new Pair<String, String>("4", "6");
-            Pair<String, String> p2 = new Pair<String, String>("5", "7");
-            Pair<String, String> p3 = new Pair<String, String>("6", "8");
-            List<Pair<String, String>> puntos = new ArrayList<>();
-            puntos.add(0, p1);
-            puntos.add(1, p2);
-            puntos.add(2, p3);
+            String p1lt = "4";
+            String p1lg = "6";
+            String p2lt = "5";
+            String p2lg = "7";
+            String p3lt = "6";
+            String p3lg = "8";
+            
+            List<String> puntos = new ArrayList<>();
+            puntos.add(p1lt);
+            puntos.add(p1lg);
+            puntos.add(p2lt);
+            puntos.add(p2lg);
+            puntos.add(p3lt);
+            puntos.add(p3lg);
 
             // Act
 
@@ -438,13 +511,20 @@ public class CURutaTest {
             repositorioUsuario.save(u);
 
             Date fecha = Date.valueOf("2023-10-17");
-            Pair<String, String> p1 = new Pair<String, String>("4", "6");
-            Pair<String, String> p2 = new Pair<String, String>("5", "7");
-            Pair<String, String> p3 = new Pair<String, String>("6", "8");
-            List<Pair<String, String>> puntos = new ArrayList<>();
-            puntos.add(0, p1);
-            puntos.add(1, p2);
-            puntos.add(2, p3);
+            String p1lt = "4";
+            String p1lg = "6";
+            String p2lt = "5";
+            String p2lg = "7";
+            String p3lt = "6";
+            String p3lg = "8";
+            
+            List<String> puntos = new ArrayList<>();
+            puntos.add(p1lt);
+            puntos.add(p1lg);
+            puntos.add(p2lt);
+            puntos.add(p2lg);
+            puntos.add(p3lt);
+            puntos.add(p3lg);
 
             String texto1000caracteres = "Este es un cuento de más de 1000 caracteres. Ernesto Gurrián se escondió tras el coche. Joaquín a su lado empuñó el arma reglamentaria. Desde allí podían ver la puerta abierta por donde saldrían. Los de dentro se habían cargado, hace tres días a Tomás Ojibe un compañero encantador con una hija de meses, tanto Joaquín como Ernesto habían estado en el bautizo. El coordinador de la operación lo dijo claramente en la reunión previa: “en caso de duda disparen, estos hijos de puta no se nos pueden escapar”. Joaquín oía su propio sobrealiento, sentía la boca seca, tenía ganas de ver la cara de mierda de aquellos tipejos a los que no conocía ni en fotos. Se fue abriendo la puerta. Ernesto tenía mejor ángulo y desde allí, fue el primero en ver y reconocer los zapatos de la chica. Joaquín le miró de reojo. Vio como de repente le empezó a temblar la mano aferrada a la pistola. Pasaron tres segundos. Vio sus ojos encharcados con una pena de padre pero una angustia de ira. Vio a Ojibe con su hija en brazos junto al baptisterio. Vio a su hija, a la suya en la calle. Joaquín grito “!Alto policía tirad las armas!” luego tres disparos. “¿Qué haces Ernesto?” le gritó. Solo murió la chica y Ernesto vivió muerto para siempre.";
 
@@ -474,13 +554,20 @@ public class CURutaTest {
             // Arrange
 
             Date fecha = Date.valueOf("2023-10-17");
-            Pair<String, String> p1 = new Pair<String, String>("4", "6");
-            Pair<String, String> p2 = new Pair<String, String>("5", "7");
-            Pair<String, String> p3 = new Pair<String, String>("6", "8");
-            List<Pair<String, String>> puntos = new ArrayList<>();
-            puntos.add(0, p1);
-            puntos.add(1, p2);
-            puntos.add(2, p3);
+            String p1lt = "4";
+            String p1lg = "6";
+            String p2lt = "5";
+            String p2lg = "7";
+            String p3lt = "6";
+            String p3lg = "8";
+            
+            List<String> puntos = new ArrayList<>();
+            puntos.add(p1lt);
+            puntos.add(p1lg);
+            puntos.add(p2lt);
+            puntos.add(p2lg);
+            puntos.add(p3lt);
+            puntos.add(p3lg);
 
             // Act
 
@@ -534,15 +621,22 @@ public class CURutaTest {
             r.setCalificacionPromedio(Float.parseFloat("4.3"));
 
             Date fecha = Date.valueOf("2023-10-17");
-            Pair<String, String> p1 = new Pair<String, String>("4", "6");
-            Pair<String, String> p2 = new Pair<String, String>("5", "7");
-            Pair<String, String> p3 = new Pair<String, String>("6", "8");
-            List<Pair<String, String>> puntos = new ArrayList<>();
-            puntos.add(0, p1);
-            puntos.add(1, p2);
-            puntos.add(2, p3);
+            String p1lt = "4";
+            String p1lg = "6";
+            String p2lt = "5";
+            String p2lg = "7";
+            String p3lt = "6";
+            String p3lg = "8";
+            
+            List<String> puntos = new ArrayList<>();
+            puntos.add(p1lt);
+            puntos.add(p1lg);
+            puntos.add(p2lt);
+            puntos.add(p2lg);
+            puntos.add(p3lt);
+            puntos.add(p3lg);
 
-            //r.setPuntos(puntos);
+            r.setPuntos(puntos);
             r.setFechaCreacion(fecha);
             r.setCreador(u);
 
@@ -597,15 +691,22 @@ public class CURutaTest {
             r.setCalificacionPromedio(Float.parseFloat("4.3"));
 
             Date fecha = Date.valueOf("2023-10-17");
-            Pair<String, String> p1 = new Pair<String, String>("4", "6");
-            Pair<String, String> p2 = new Pair<String, String>("5", "7");
-            Pair<String, String> p3 = new Pair<String, String>("6", "8");
-            List<Pair<String, String>> puntos = new ArrayList<>();
-            puntos.add(0, p1);
-            puntos.add(1, p2);
-            puntos.add(2, p3);
+            String p1lt = "4";
+            String p1lg = "6";
+            String p2lt = "5";
+            String p2lg = "7";
+            String p3lt = "6";
+            String p3lg = "8";
+            
+            List<String> puntos = new ArrayList<>();
+            puntos.add(p1lt);
+            puntos.add(p1lg);
+            puntos.add(p2lt);
+            puntos.add(p2lg);
+            puntos.add(p3lt);
+            puntos.add(p3lg);
 
-            //r.setPuntos(puntos);
+            r.setPuntos(puntos);
             r.setFechaCreacion(fecha);
             r.setCreador(u);
 
@@ -625,8 +726,8 @@ public class CURutaTest {
             List<Calificacion_Ruta> crs = repositorioCalificacion_Ruta.findByCreador_Login("parcero");
             for (Calificacion_Ruta cali: crs){
                 if (cali.getRutaCalificada().getNombre() == "Universidades"){
-                    if (cali.getRutaCalificada().getDescripcion() != "Sin reseña"){
-                        fail("El sistema registró erróneamente la reseña de una calificación");
+                    if (cali.getReseña() != "Sin reseña"){
+                        fail("El sistema registró erróneamente la reseña de una calificación porque quedo como " + cali.getReseña());
                     }
                 }
             }
@@ -668,15 +769,22 @@ public class CURutaTest {
             r.setCalificacionPromedio(Float.parseFloat("4.3"));
 
             Date fecha = Date.valueOf("2023-10-17");
-            Pair<String, String> p1 = new Pair<String, String>("4", "6");
-            Pair<String, String> p2 = new Pair<String, String>("5", "7");
-            Pair<String, String> p3 = new Pair<String, String>("6", "8");
-            List<Pair<String, String>> puntos = new ArrayList<>();
-            puntos.add(0, p1);
-            puntos.add(1, p2);
-            puntos.add(2, p3);
+            String p1lt = "4";
+            String p1lg = "6";
+            String p2lt = "5";
+            String p2lg = "7";
+            String p3lt = "6";
+            String p3lg = "8";
+            
+            List<String> puntos = new ArrayList<>();
+            puntos.add(p1lt);
+            puntos.add(p1lg);
+            puntos.add(p2lt);
+            puntos.add(p2lg);
+            puntos.add(p3lt);
+            puntos.add(p3lg);
 
-            //r.setPuntos(puntos);
+            r.setPuntos(puntos);
             r.setFechaCreacion(fecha);
             r.setCreador(u);
 
@@ -734,15 +842,22 @@ public class CURutaTest {
             r.setCalificacionPromedio(Float.parseFloat("4.3"));
 
             Date fecha = Date.valueOf("2023-10-17");
-            Pair<String, String> p1 = new Pair<String, String>("4", "6");
-            Pair<String, String> p2 = new Pair<String, String>("5", "7");
-            Pair<String, String> p3 = new Pair<String, String>("6", "8");
-            List<Pair<String, String>> puntos = new ArrayList<>();
-            puntos.add(0, p1);
-            puntos.add(1, p2);
-            puntos.add(2, p3);
+            String p1lt = "4";
+            String p1lg = "6";
+            String p2lt = "5";
+            String p2lg = "7";
+            String p3lt = "6";
+            String p3lg = "8";
+            
+            List<String> puntos = new ArrayList<>();
+            puntos.add(p1lt);
+            puntos.add(p1lg);
+            puntos.add(p2lt);
+            puntos.add(p2lg);
+            puntos.add(p3lt);
+            puntos.add(p3lg);
 
-            //r.setPuntos(puntos);
+            r.setPuntos(puntos);
             r.setFechaCreacion(fecha);
             r.setCreador(u);
 
@@ -771,7 +886,7 @@ public class CURutaTest {
             List<Calificacion_Ruta> crs = repositorioCalificacion_Ruta.findByCreador_Login("parcero");
             for (Calificacion_Ruta cali: crs){
                 if (cali.getRutaCalificada().getNombre() == "Universidades"){
-                    if (cali.getRutaCalificada().getDescripcion() != reseña){
+                    if (cali.getReseña() != reseña){
                         fail("El sistema registró erróneamente la nueva reseña de un usuario");
                     }
                 }

@@ -2,12 +2,16 @@ package com.ingesoft.bikemap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.ingesoft.bikemap.dataAccess.RepositorioPunto_Interes;
+import com.ingesoft.bikemap.dataAccess.RepositorioRuta;
 import com.ingesoft.bikemap.dataAccess.RepositorioUsuario;
 import com.ingesoft.bikemap.dominio.Usuario;
 import com.ingesoft.bikemap.logic.ServicioUsuario;
@@ -22,9 +26,28 @@ public class CUUsuarioTest {
     @Autowired
     RepositorioUsuario repoUsuario;
 
+    @Autowired
+    RepositorioPunto_Interes repoPunto;
+
+    @Autowired
+    RepositorioRuta repoRuta;
+
+    @Autowired
+    JdbcTemplate simpleJdbcTemplate;
+
     @BeforeEach
     void resetear() {
+        simpleJdbcTemplate.execute("SET REFERENTIAL_INTEGRITY FALSE;");
+
+
+        repoPunto.deleteAll();
+        repoRuta.deleteAll();
         repoUsuario.deleteAll();
+    }
+
+    @AfterEach
+    void resetearOtraVez(){
+        simpleJdbcTemplate.execute("SET REFERENTIAL_INTEGRITY TRUE;");
     }
 
     // CU Iniciar Sesión
@@ -51,7 +74,7 @@ public class CUUsuarioTest {
 
         } catch (Exception e) {
             // Assert
-            fail("El inicio de sesión no fue exitoso");
+            fail("El inicio de sesión no fue exitoso porque " + e.getMessage());
         }
     }
 
@@ -138,7 +161,7 @@ public class CUUsuarioTest {
         } catch (Exception e) {
             // Assert
 
-            fail("El sistema no guardó al usuario");
+            fail("El mp guardó al usuario de forma exitosa porque " + e.getMessage());
         }
 
     }
