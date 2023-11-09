@@ -5,11 +5,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.sql.Date;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.ingesoft.bikemap.dataAccess.RepositorioCalificacion_Punto;
 import com.ingesoft.bikemap.dataAccess.RepositorioPunto_Interes;
@@ -34,9 +36,13 @@ public class CUPuntoDeInteresTest {
     RepositorioCalificacion_Punto repositorioCalificacion_Punto;
     @Autowired
     RepositorioTipo_Punto repositorioTipo_Punto;
+    @Autowired
+    JdbcTemplate simpleJdbcTemplate;
 
     @BeforeEach
     void resetear() {
+        simpleJdbcTemplate.execute("SET REFERENTIAL_INTEGRITY FALSE;");
+        
         repositorioCalificacion_Punto.deleteAll();
         repositorioPunto_Interes.deleteAll();
         repositorioTipo_Punto.deleteAll();
@@ -80,6 +86,12 @@ public class CUPuntoDeInteresTest {
         p.setCreador(u);
 
         repositorioPunto_Interes.save(p);
+    }
+
+    @AfterEach
+    void resetearOtraVez(){
+        simpleJdbcTemplate.execute("SET REFERENTIAL_INTEGRITY TRUE;");
+
     }
 
     // CU Calificar punto de interes
